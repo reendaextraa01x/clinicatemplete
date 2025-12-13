@@ -1,0 +1,7 @@
+{
+  "name": "Aura Capilar - Elite Hair Restoration",
+  "description": "Uma experiência digital de ultra-luxo para clínica de transplante capilar, apresentando consultoria de IA e análise preliminar de imagem.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
