@@ -11,6 +11,7 @@ import { CustomCursor } from './components/CustomCursor';
 import { Marquee } from './components/Marquee';
 import { PremiumService } from './components/PremiumService';
 import { ImpactMetrics } from './components/ImpactMetrics';
+import { BookingCTA } from './components/BookingCTA';
 
 function App() {
   return (
@@ -39,6 +40,8 @@ function App() {
           <Features /> {/* id="protocolos" */}
           
           <PremiumService />
+
+          <BookingCTA />
           
         </main>
 
