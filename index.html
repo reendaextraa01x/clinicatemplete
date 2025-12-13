@@ -111,7 +111,6 @@
         text-wrap: balance;
       }
       
-      /* Smooth Reveal Classes using Intersection Observer logic in React or native CSS scroll-driven animations if supported, sticking to CSS classes for simplicity */
       .reveal-hidden {
         opacity: 0;
         transform: translateY(30px);
@@ -131,11 +130,13 @@
   <script type="importmap">
 {
   "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
+    "react-dom": "https://esm.sh/react-dom@^19.2.3",
     "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
     "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>
@@ -143,5 +144,6 @@
   <body class="bg-navy-950 text-slate-200 antialiased overflow-x-hidden selection:bg-gold-500 selection:text-navy-950">
     <div class="bg-noise"></div>
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

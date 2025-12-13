@@ -46,7 +46,7 @@ export const Hero: React.FC = () => {
         </video>
       </div>
 
-      {/* 2. Massive Aura Background Typography (Restored & Elegant) */}
+      {/* 2. Massive Aura Background Typography */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full text-center pointer-events-none mix-blend-overlay opacity-30 md:opacity-50">
         <h1 
           className="font-serif text-[25vw] leading-none text-white tracking-widest blur-sm select-none animate-[pulse-slow_4s_ease-in-out_infinite]"
@@ -59,7 +59,7 @@ export const Hero: React.FC = () => {
       {/* 3. Main Content Layer */}
       <div className="relative z-30 max-w-[90rem] mx-auto px-4 w-full flex flex-col h-full justify-center pb-20 md:pb-0">
         
-        {/* Top Label */}
+        {/* Top Label - GREEN DOT VIP (No Red Icon) */}
         <div className="flex justify-center mb-8 md:mb-12 overflow-hidden">
           <div className="animate-[reveal_1.2s_ease-out_forwards]">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white/5 backdrop-blur-md border border-gold-500/30 hover:bg-gold-500/10 transition-colors shadow-[0_0_15px_rgba(219,182,43,0.2)]">
