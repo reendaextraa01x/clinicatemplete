@@ -28,29 +28,47 @@ export const Hero: React.FC = () => {
   return (
     <div ref={containerRef} className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center bg-navy-950">
       
-      {/* 1. Cinematic Video Background */}
-      <div className="absolute inset-0 z-0 select-none">
-        <div className="absolute inset-0 bg-navy-950/60 mix-blend-multiply z-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-navy-950/60 z-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950/80 via-transparent to-transparent z-20"></div>
+      {/* 1. Cinematic Composite Background */}
+      <div className="absolute inset-0 z-0 select-none overflow-hidden">
         
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="w-full h-full object-cover scale-110 md:scale-105"
-          style={{ transform: `scale(1.05) translate(${-mousePos.x * 3}px, ${-mousePos.y * 3}px)` }}
-        >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-gold-fluid-moving-slowly-3165-large.mp4" type="video/mp4" />
-        </video>
+        {/* Layer A: Luxury Clinic Interior (The Physical Space) */}
+        <div className="absolute inset-0 z-0">
+           <img 
+             src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2000&auto=format&fit=crop" 
+             alt="Clinic Interior" 
+             className="w-full h-full object-cover scale-110 opacity-60"
+             style={{ 
+               transform: `scale(1.1) translate(${-mousePos.x * 10}px, ${-mousePos.y * 10}px)`,
+               transition: 'transform 0.1s ease-out'
+             }}
+           />
+        </div>
+
+        {/* Layer B: Atmosphere & Grading */}
+        <div className="absolute inset-0 bg-navy-950/70 mix-blend-multiply z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/60 to-navy-950/40 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-transparent to-transparent z-10 opacity-80"></div>
+        
+        {/* Layer C: The Aura (Gold Fluid Video as Ethereal Fog) */}
+        <div className="absolute inset-0 z-20 opacity-40 mix-blend-screen pointer-events-none">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover grayscale-[20%] contrast-125"
+            style={{ transform: `scale(1.2) translate(${mousePos.x * 5}px, ${mousePos.y * 5}px)` }}
+          >
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-gold-fluid-moving-slowly-3165-large.mp4" type="video/mp4" />
+          </video>
+        </div>
       </div>
 
       {/* 2. Massive Aura Background Typography */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full text-center pointer-events-none mix-blend-overlay opacity-30 md:opacity-50">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-full text-center pointer-events-none mix-blend-overlay opacity-40">
         <h1 
           className="font-serif text-[25vw] leading-none text-white tracking-widest blur-sm select-none animate-[pulse-slow_4s_ease-in-out_infinite]"
-          style={{ transform: `translate(${mousePos.x * 10}px, ${mousePos.y * 10}px)` }}
+          style={{ transform: `translate(${mousePos.x * 15}px, ${mousePos.y * 15}px)` }}
         >
           AURA
         </h1>
@@ -71,7 +89,7 @@ export const Hero: React.FC = () => {
 
         {/* Hero Title */}
         <div className="text-center mb-8 md:mb-12 relative z-40">
-           <h1 className="text-5xl md:text-8xl font-serif text-white leading-[0.9] md:leading-[0.85] tracking-tight">
+           <h1 className="text-5xl md:text-8xl font-serif text-white leading-[0.9] md:leading-[0.85] tracking-tight drop-shadow-2xl">
              <span className="block animate-[reveal_1.2s_ease-out_0.2s_forwards] opacity-0 translate-y-10">Restaurando</span>
              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-100 to-gold-400 italic font-light animate-[reveal_1.4s_ease-out_0.4s_forwards] opacity-0 translate-y-10">
                A Sua Identidade
@@ -82,7 +100,7 @@ export const Hero: React.FC = () => {
         {/* Bottom Details & Actions */}
         <div className="flex flex-col items-center animate-[reveal_1.5s_ease-out_0.8s_forwards] opacity-0 translate-y-10 z-50 w-full md:w-auto px-4">
           
-          <p className="max-w-xs md:max-w-lg text-center text-slate-300 text-sm md:text-lg leading-relaxed mb-8 md:mb-10 font-light text-balance drop-shadow-md">
+          <p className="max-w-xs md:max-w-lg text-center text-slate-200 text-sm md:text-lg leading-relaxed mb-8 md:mb-10 font-light text-balance drop-shadow-lg bg-navy-950/30 backdrop-blur-sm rounded-lg p-2 md:bg-transparent md:backdrop-blur-0">
             Tecnologia suíça, precisão microscópica e garantia vitalícia.
           </p>
 
@@ -106,7 +124,7 @@ export const Hero: React.FC = () => {
              {/* Diagnosis Button */}
              <button 
                 onClick={scrollToConsultation}
-                className="group w-full md:w-auto relative px-8 py-4 bg-white/5 border border-white/20 hover:border-gold-500 rounded-full md:rounded-sm overflow-hidden transition-all duration-300 active:scale-95"
+                className="group w-full md:w-auto relative px-8 py-4 bg-white/5 border border-white/20 hover:border-gold-500 rounded-full md:rounded-sm overflow-hidden transition-all duration-300 active:scale-95 backdrop-blur-md"
              >
                 <span className="relative z-10 text-xs font-bold uppercase tracking-[0.2em] text-white group-hover:text-navy-950 transition-colors duration-500 flex items-center justify-center gap-2">
                   <Zap size={14} className="text-gold-500 group-hover:text-navy-950" />
@@ -116,7 +134,7 @@ export const Hero: React.FC = () => {
              </button>
           </div>
           
-          <p className="mt-6 text-[10px] text-slate-500 uppercase tracking-widest flex items-center gap-2">
+          <p className="mt-6 text-[10px] text-slate-400 uppercase tracking-widest flex items-center gap-2 drop-shadow-md">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
             2 Especialistas online agora
           </p>

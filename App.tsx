@@ -16,7 +16,7 @@ import { BookingCTA } from './components/BookingCTA';
 function App() {
   return (
     <>
-      <div className="min-h-screen bg-navy-950 text-slate-200 selection:bg-gold-500 selection:text-navy-950 font-sans cursor-none">
+      <div className="min-h-screen bg-transparent text-slate-200 selection:bg-gold-500 selection:text-navy-950 font-sans cursor-none">
         <CustomCursor />
         <Navbar />
         
