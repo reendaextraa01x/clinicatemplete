@@ -81,7 +81,7 @@ export const ResultsGallery: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6">
           <div className="max-w-xl text-center md:text-left">
             <span className="text-gold-500 text-xs tracking-[0.3em] uppercase font-semibold flex items-center justify-center md:justify-start gap-2">
               <Star size={10} fill="currentColor" /> Resultado Platinum
