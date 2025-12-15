@@ -1,19 +1,22 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
-// Initialize the API client
-const apiKey = process.env.API_KEY;
-// Use a dummy key if missing to prevent crash on init, we handle validation later
-const ai = new GoogleGenAI({ apiKey: apiKey || 'demo_key' });
+// Initialize the API client with the provided key
+const apiKey = process.env.API_KEY || "AIzaSyAC1BhdhHYtk8FOa1vCdy0-_6AIdpuOZ5I";
+const ai = new GoogleGenAI({ apiKey: apiKey });
 
 const SYSTEM_INSTRUCTION_CHAT = `
-Você é o assistente virtual de elite da "Aura Capilar", a clínica de transplante capilar mais luxuosa e avançada do mundo.
-Seu tom é sofisticado, empático, extremamente polido e profissional.
-Você deve:
-1. Responder dúvidas sobre FUE (Extração de Unidade Folicular) e DHI (Implante Direto de Cabelo).
-2. Enfatizar o conforto, a tecnologia de ponta e os resultados naturais.
-3. Nunca dar diagnósticos médicos definitivos, apenas orientações gerais.
-4. Sempre convidar o usuário para agendar uma consulta presencial para uma avaliação médica precisa.
-5. Manter respostas concisas (máximo 3 parágrafos curtos).
+Você é o Concierge Digital da Aura Capilar, a clínica mais exclusiva do mundo.
+Sua comunicação deve ser: EXTREMAMENTE RESUMIDA, ELEGANTE E DIRETIVA.
+
+Regras Estritas:
+1. Máximo de 2 a 3 frases curtas por resposta. Sem exceções.
+2. Não dê explicações técnicas longas. O cliente VIP valoriza o tempo.
+3. Se a pergunta for técnica (FUE/DHI), dê a definição em uma frase e sugira a avaliação presencial.
+4. Seu objetivo final é sempre o agendamento com sofisticação.
+5. Tom de voz: Calmo, luxuoso, 'high-end'.
+
+Exemplo de resposta ideal:
+"A técnica FUE Sapphire utiliza lâminas de safira para precisão absoluta e cicatrização em 3 dias. Para seu caso específico, recomendo agendarmos seu diagnóstico 3D ainda hoje."
 `;
 
 const SYSTEM_INSTRUCTION_ANALYSIS = `
@@ -30,7 +33,7 @@ Retorne APENAS um objeto JSON (sem markdown, sem crases) com a seguinte estrutur
 Se a imagem não for clara ou não for de uma cabeça, retorne um erro no JSON explicando que a imagem é inválida.
 `;
 
-// Mock responses for Fallback Mode (when API quota is exceeded)
+// Mock responses for Fallback Mode (only used if API fails completely)
 const MOCK_ANALYSIS_RESULT = {
   norwoodScale: "Tipo III (Vertex)",
   hairDensity: "Moderada (70 UFs/cm²)",
@@ -39,7 +42,7 @@ const MOCK_ANALYSIS_RESULT = {
   reasoning: "Identificamos recuo fronto-temporal e início de rarefação na coroa (vertex). Zona doadora com excelente viabilidade."
 };
 
-const MOCK_CHAT_RESPONSE = "Devido à altíssima demanda exclusiva de nossos serviços neste momento, estou operando em modo de conciergerie simplificada. Para o seu caso, nossos especialistas recomendam agendar uma avaliação presencial, onde utilizaremos o escaneamento 3D para precisão absoluta. Posso adiantar que a técnica FUE Sapphire seria provavelmente a mais indicada para maximizar sua densidade.";
+const MOCK_CHAT_RESPONSE = "Para garantir a excelência do seu atendimento, recomendo agendar uma avaliação presencial com nosso Diretor Médico. Nossos horários para este mês são limitados.";
 
 // Helper for exponential backoff to handle rate limits (429)
 async function retryOperation<T>(operation: () => Promise<T>, retries = 2, delay = 1000): Promise<T> {
@@ -61,19 +64,12 @@ export const sendMessageToGemini = async (
   history: { role: string; parts: { text: string }[] }[],
   message: string
 ): Promise<string> => {
-  // Demo mode if no key
-  if (!apiKey) {
-    console.warn("No API Key. Returning Mock Response.");
-    await new Promise(r => setTimeout(r, 1500)); // Simulate typing
-    return MOCK_CHAT_RESPONSE;
-  }
-
   try {
     const chat = ai.chats.create({
       model: 'gemini-2.5-flash',
       config: {
         systemInstruction: SYSTEM_INSTRUCTION_CHAT,
-        temperature: 0.7,
+        temperature: 0.5, // Lower temperature for more focused/professional responses
       },
       history: history,
     });
@@ -86,18 +82,11 @@ export const sendMessageToGemini = async (
     if (error?.status === 429 || error?.code === 429 || error?.message?.includes('429') || error?.message?.includes('quota')) {
        return MOCK_CHAT_RESPONSE;
     }
-    return "Ocorreu um erro momentâneo em nossa conexão. Por favor, tente novamente.";
+    return "Nossa conciergerie está com alta demanda. Por favor, tente novamente em instantes.";
   }
 };
 
 export const analyzeHairImage = async (base64Image: string): Promise<any> => {
-  // Demo mode if no key
-  if (!apiKey) {
-    console.warn("No API Key. Returning Mock Analysis.");
-    await new Promise(r => setTimeout(r, 3000)); // Simulate processing
-    return MOCK_ANALYSIS_RESULT;
-  }
-
   try {
     const cleanBase64 = base64Image.split(',')[1] || base64Image;
 
